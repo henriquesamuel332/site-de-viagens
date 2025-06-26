@@ -1,0 +1,94 @@
+/* Define o fundo, cor do texto, fonte e remove margens da página */
+body {
+    background-color: #F7F4EA;
+    color: #1A1A40;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estiliza os títulos principais (PACOTES NACIONAIS / INTERNACIONAIS) */
+h2 {
+    text-align: center; /* Centraliza o texto */
+    color: #1A1A40;     /* Cor escura */
+    margin-top: 30px;   /* Espaço acima do título */
+}
+
+/* Define a grade responsiva onde os cards ficam */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adapta número de colunas */
+    gap: 30px;           /* Espaço entre os cards */
+    padding: 20px 50px;  /* Espaço interno da grade */
+}
+
+/* Estiliza cada card individual */
+.card {
+    background-color: white;           /* Fundo branco */
+    border: 2px solid #CBA135;         /* Borda dourada */
+    border-radius: 40px;               /* Cantos arredondados */
+    padding: 15px;                     /* Espaço interno */
+    text-align: center;                /* Centraliza o conteúdo */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra leve */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animação suave ao passar o mouse */
+}
+
+/* Estiliza a imagem dentro do card */
+.card img {
+    width: 100%;              /* Largura total do espaço */
+    height: 220px;            /* Altura fixa */
+    object-fit: cover;        /* Corta a imagem sem deformar */
+    border-radius: 15px;      /* Cantos arredondados na imagem */
+    margin-bottom: 10px;      /* Espaço abaixo da imagem */
+}
+
+/* Nome do destino turístico */
+.card h3 {
+    color: #1A1A40;
+    margin-bottom: 10px;
+    font-family: 'Arial Black', Arial, sans-serif; /* Fonte arial black */
+    font-weight: bold;
+}
+
+/* Espaçamento entre as informações do card */
+.card p {
+    margin: 6px 0;
+}
+
+/* Botão "Ver Oferta" */
+.card a {
+    display: inline-block;          /* Faz o link -se houver- parecer botão */
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #CBA135;      /* Fundo dourado */
+    color: #F7F4EA;                 /* Texto claro */
+    text-decoration: none;          /* Remove sublinhado */
+    border-radius: 15px;
+    transition: 0.3s;               /* Animação */
+}
+
+/* Quando o mouse passa sobre o botão */
+.card a:hover {
+    background-color: #A07825; /* Tom escuro de dourado */
+}
+
+/* Texto abaixo do título principal (legenda) */
+.legenda {
+    text-align: center;
+    color: #1A1A40;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+/* Efeito ao passar o mouse no card inteiro*/
+.card:hover {
+    transform: translateY(-10px); /* Move o card para cima */
+    box-shadow: 0 8px 20px rgba(26, 26, 64, 0.2); /* Sombra mais intensa */
+}
+
+/* Espaço entre a primeira e segunda seção de pacotes */
+section.pacotes + section.pacotes {
+    margin-top: 6%;
+}
