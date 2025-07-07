@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário de Viagem Completo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="main">
+        <div id="cabecalho">
+            <header>
+                <a href="index.html"><img src="img/logo.site.jpeg" alt=""></a>
+                
+                <h1 id="nome-site">Viagens.com</h1>
+                <div id="navegacao">
+                    <ul>
+                       
+                       <li><a href="index.html">Início</a></li>
+                        <li><a href="pacote.html">Pacotes</a></li>
+                        <li><a href="Disney.html">Disney</a></li>
+                        <li><a href="universal.html">Universal</a></li>
+                    </ul>
+                </div>
+            </header>
+        </div>
+  <h2>Formulário de Viagem</h2>
+
+  <!--Seleciona o tipo de viagem -->
+  <label for="tipoViagem">Tipo de viagem:</label>
+  <select id="tipoViagem">
+    <option value="">-- Selecione --</option>
+    <option value="nacional">Nacional</option>
+    <option value="internacional">Internacional</option>
+  </select>
+
+  <!-- selecionar destinos -->
+  <div id="destinoSection" class="hidden">
+    <label for="destino">Destino:</label>
+    <select id="destino">
+      <option value="">-- Selecione um destino --</option>
+    </select>
+  </div>
+
+  <!-- selecionar cidades -->
+  <div id="cidadeSection" class="hidden">
+    <label for="cidade">Cidade:</label>
+    <select id="cidade">
+      <option value="">-- Selecione uma cidade --</option>
+    </select>
+  </div>
+
+  <!-- seleciona locais para alugar -->
+  <div id="aluguelSection" class="hidden">
+    <label for="aluguel">Lugar para alugar:</label>
+    <select id="aluguel">
+      <option value="">-- Selecione um lugar --</option>
+    </select>
+  </div>
+
+  <script>
+    // Dados dos destinos cidades e lugares e locais de aluguel
+    const dados = {
+      nacional: {
+        "São Paulo": {
+          "São Paulo (Capital)": ["Hotel Paulista", "Hostel Vila Madá"],
+          "Campinas": ["Hotel Premium", "Pousada do Centro"]
+        },
+        "Bahia": {
+          "Salvador": ["Hotel Sol", "Pousada Mar Azul"],
+          "Porto Seguro": ["Resort Paraíso", "Hotel Atlântico"],
+          "Ilhéus": ["Pousada do Mar", "Hotel Costa do Cacau"]
+        },
+        "Rio de Janeiro": {
+          "Rio de Janeiro (Capital)": ["Copacabana Palace", "Hotel Ipanema"],
+          "Búzios": ["Pousada Geribá", "Hotel Praia Brava"]
+        },
+        "Rio Grande do Sul": {
+          "Porto Alegre": ["Hotel Centro", "Pousada Gaúcha"],
+          "Gramado": ["Hotel das Hortênsias", "Resort da Serra"]
+        },
+        "Minas Gerais": {
+          "Belo Horizonte": ["Hotel Savassi", "Pousada Pampulha"],
+          "Ouro Preto": ["Hotel Histórico", "Pousada Imperial"]
+        }
+      },
+      internacional: {
+        "Japão": {
+          "Tóquio": ["Hotel Sakura", "Ryokan Central"],
+          "Quioto": ["Hotel Zen", "Pousada do Templo"]
+        },
+        "Estados Unidos": {
+          "Nova York": ["Hotel Times", "Brooklyn Hostel"],
+          "Los Angeles": ["Beverly Hotel", "Hollywood Inn"]
+        },
+        "França": {
+          "Paris": ["Hotel Eiffel", "Pousada do Louvre"],
+          "Nice": ["Hotel Côte d'Azur", "Pousada Riviera"]
+        },
+        "Inglaterra": {
+          "Londres": ["London Hotel", "Pousada Big Ben"],
+          "Manchester": ["Hotel Red", "Pousada Old Trafford"]
+        },
+        "Argentina": {
+          "Buenos Aires": ["Hotel Recoleta", "Hostel Palermo"],
+          "Mendoza": ["Pousada dos Andes", "Hotel Vinho"]
+        }
+      }
+    };
+
+    // Pega elementos do HTML e seta variaveis
+    const tipoViagem = document.getElementById("tipoViagem");
+    const destinoSection = document.getElementById("destinoSection");
+    const destino = document.getElementById("destino");
+    const cidadeSection = document.getElementById("cidadeSection");
+    const cidade = document.getElementById("cidade");
+    const aluguelSection = document.getElementById("aluguelSection");
+    const aluguel = document.getElementById("aluguel");
+
+    // Quando selecionar o tipo de viagem
+    tipoViagem.addEventListener("change", () => {
+      const tipo = tipoViagem.value;
+      resetSelect(destino);
+      resetSelect(cidade);
+      resetSelect(aluguel);
+      cidadeSection.classList.add("hidden");
+      aluguelSection.classList.add("hidden");
+
+      if (tipo) {
+        destinoSection.classList.remove("hidden");
+
+        // Preenche os destinos
+        Object.keys(dados[tipo]).forEach(dest => {
+          const opt = document.createElement("option");
+          opt.value = dest;
+          opt.textContent = dest;
+          destino.appendChild(opt);
+        });
+      } else {
+        destinoSection.classList.add("hidden");
+      }
+    });
+
+    // Quando selecionar o destino
+    destino.addEventListener("change", () => {
+      const tipo = tipoViagem.value;
+      const destinoSelecionado = destino.value;
+      resetSelect(cidade);
+      resetSelect(aluguel);
+      aluguelSection.classList.add("hidden");
+
+      if (destinoSelecionado) {
+        cidadeSection.classList.remove("hidden");
+        const cidades = Object.keys(dados[tipo][destinoSelecionado]);
+        cidades.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          cidade.appendChild(opt);
+        });
+      } else {
+        cidadeSection.classList.add("hidden");
+      }
+    });
+
+    // quando selecionar a cidade
+    cidade.addEventListener("change", () => {
+      const tipo = tipoViagem.value;
+      const destinoSelecionado = destino.value;
+      const cidadeSelecionada = cidade.value;
+      resetSelect(aluguel);
+
+      if (cidadeSelecionada) {
+        aluguelSection.classList.remove("hidden");
+        const locais = dados[tipo][destinoSelecionado][cidadeSelecionada];
+        locais.forEach(lugar => {
+          const opt = document.createElement("option");
+          opt.value = lugar;
+          opt.textContent = lugar;
+          aluguel.appendChild(opt);
+        });
+      } else {
+        aluguelSection.classList.add("hidden");
+      }
+    });
+
+    // função para resetar selects
+    function resetSelect(selectElement) {
+      selectElement.innerHTML = '<option value="">-- Selecione --</option>';
+    }
+  </script>
+  <div id="rodape">
+            <!-- rodape ou footer tambem sera fixo  -->
+            <footer>
+                <h4>Redes Socias</h4>
+                <ol class="lista-redes-socias">
+                    <li> <img src="img/instagram.png" alt=""><a href="https://www.instagram.com/">Instagram</a></li>
+                    <li> <img src="img/x_logo.png" alt=""><a href="https://x.com/">X</a></li>
+                    <li> <img src="img/youtube_logo (1).png" alt=""><a href="https://www.youtube.com/shorts/zuLgVaKzDvg">YouTube</a></li>
+                </ol>
+                <p>
+                    &copy; Todos os direitos reservados.
+                </p>
+            </footer>
+        </div>
+
+</body>
+</html>
